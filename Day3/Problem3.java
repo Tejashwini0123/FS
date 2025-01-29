@@ -65,13 +65,11 @@ class Main {
         HashMap<Integer,Integer> h=new HashMap<>();
         int j=0,c=0;
         for(int i=0;i<n;i++){
-            
             h.put(a[i],h.getOrDefault(a[i],0)+1);
             curr+=a[i];
             c++;
             while(h.getOrDefault(a[i],0)>freq || curr>area){
-                
-                    h.put(a[j],h.get(a[j])-1);
+                h.put(a[j],h.get(a[j])-1);
                 if(h.get(a[j])==0){
                     h.remove(a[j]);
                 }
