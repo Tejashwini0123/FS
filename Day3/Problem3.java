@@ -53,31 +53,35 @@ Constraints:
 1 <= maxArea <= 10^9
 */
 import java.util.*;
-class Test{
-    public static void main(String args[]){
-        Scanner sc = new Scanner(System.in);
-        int n=sc.nextInt();
-        int f=sc.nextInt();
-        int m=sc.nextInt();
+class Main {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt(), freq=sc.nextInt(), area=sc.nextInt();
         int a[]=new int[n];
-        for(int i=0;i<n;i++){
+        int ans=Integer.MIN_VALUE, curr=0;
+        for(int i=0;i<a.length;i++){
             a[i]=sc.nextInt();
         }
-        HashMap<Integer,Integer> hm= new HashMap<>();
-        int l=0,temp=0,ans=0;
-        for(int r=0;r<n;r++){
-            temp+=a[r];
-            hm.put(a[r], hm.getOrDefault(a[r], 0) + 1);
-            while(temp>m || hm.get(a[r])>f){
-                temp-=a[l];
-                hm.put(a[l],hm.get(a[l])-1);
-                if(hm.get(a[l])<=0){
-                hm.remove(a[l]);
+        HashMap<Integer,Integer> h=new HashMap<>();
+        int j=0,c=0;
+        for(int i=0;i<n;i++){
+            
+            h.put(a[i],h.getOrDefault(a[i],0)+1);
+            curr+=a[i];
+            c++;
+            while(h.getOrDefault(a[i],0)>freq || curr>area){
+                
+                    h.put(a[j],h.get(a[j])-1);
+                if(h.get(a[j])==0){
+                    h.remove(a[j]);
                 }
-                l++;
+                curr-=a[j];
+                c--;
+                j++;
             }
-            ans=Math.max(ans,r-l+1);
-    }
+            
+            ans=Math.max(c,ans);
+        }
         System.out.println(ans);
     }
 }
