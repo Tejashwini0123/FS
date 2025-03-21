@@ -51,3 +51,29 @@ Sample Output:
 123
 
 */
+import java.util.Arrays;
+import java.util.Scanner;
+
+class Test {
+    public static int getMinimumTotalReward(int N, int[] rewards) {
+        Arrays.sort(rewards);
+        int totalReward = rewards[0]; 
+        for (int i = 1; i < N; i++) {
+            if (rewards[i] <= rewards[i - 1]) {
+                rewards[i] = rewards[i - 1] + 1; 
+}
+            totalReward += rewards[i];
+}
+        return totalReward;
+}
+public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int[] rewards = new int[N];
+        for (int i = 0; i < N; i++) {
+            rewards[i] = scanner.nextInt();
+}
+        int result = getMinimumTotalReward(N, rewards);
+        System.out.println(result);
+}
+}
