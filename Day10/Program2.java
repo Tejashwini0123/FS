@@ -56,3 +56,24 @@ Sample Output:
 ----------------
 [55, 5, 15, 25, 35, 45, 65]
 */
+
+import java.util.*;
+class test
+{
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        LinkedList<Integer> l=new LinkedList<>();
+        for(int i=0;i<n;i++)
+        {
+            l.add(sc.nextInt());
+        }
+        if(k>=l.size())
+            k=k%l.size();
+            int j=l.remove(k);
+            l.addFirst(j);
+        System.out.println(l);
+    }
+}
