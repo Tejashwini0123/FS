@@ -52,76 +52,25 @@ step-5: N=2, even, so 2/2=1
 Total steps=5
 
 */
-using integer
 import java.util.*;
-
-public class ReduceToOne {
-    public static int reduceSteps(String S) {
-        // Convert binary string to integer
-        int N = Integer.parseInt(S, 2);
+public class Solution {
+    public static int countSteps(String S) {
         int steps = 0;
-
+        long N = Long.parseLong(S, 2); 
         while (N > 1) {
             if (N % 2 == 0) {
-                N /= 2;  // If even, divide by 2
+                N /= 2;
             } else {
-                N += 1;  // If odd, add 1
+                N += 1;
             }
             steps++;
         }
+        
         return steps;
     }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String S = sc.next();
-        System.out.println(reduceSteps(S));
-        sc.close();
+        System.out.println(countSteps(S));
     }
 }
-import java.util.*;
-
-public class ReduceBinaryString {
-    public static int reduceSteps(String S) {
-        int steps = 0;
-        StringBuilder sb = new StringBuilder(S);
-
-        while (!sb.toString().equals("1")) {
-            int len = sb.length();
-            if (sb.charAt(len - 1) == '0') {
-                // If even (ends in '0'), divide by 2 (remove last character)
-                sb.deleteCharAt(len - 1);
-            } else {
-                // If odd (ends in '1'), increment the binary number
-                sb = addOne(sb);
-            }
-            steps++;
-        }
-        return steps;
-    }
-
-    private static StringBuilder addOne(StringBuilder sb) {
-        int carry = 1;
-        for (int i = sb.length() - 1; i >= 0; i--) {
-            if (sb.charAt(i) == '0') {
-                sb.setCharAt(i, '1');
-                carry = 0;
-                break;
-            } else {
-                sb.setCharAt(i, '0');
-            }
-        }
-        if (carry == 1) {
-            sb.insert(0, '1');  // If there's a carry left, prepend '1'
-        }
-        return sb;
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String S = sc.next();
-        System.out.println(reduceSteps(S));
-        sc.close();
-    }
-}
-/*
