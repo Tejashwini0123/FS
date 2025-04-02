@@ -39,7 +39,68 @@ Sample Output-2:
 ----------------
 [3, 2, 1]
  */
-import java.util.*;
+ import java.util.*;
+ class TreeNode{
+    int val;
+    TreeNode left,right;
+    public TreeNode(int val){
+        this.val=val;
+        this.left=null;
+        this.right=null;
+    }
+}
+class Solution{
+    public static TreeNode createTree(int l[]){
+        if(l.length==0) return null;
+        Queue<TreeNode> queue=new LinkedList<>();
+        TreeNode root=new TreeNode(l[0]);
+        queue.add(root);
+        int i=1;
+        while(!queue.isEmpty()){
+            TreeNode node=queue.poll();
+            if(i<l.length && l[i]!=-1){
+                node.left=new TreeNode(l[i]);
+                queue.add(node.left);
+            } 
+            i++;
+            if(i<l.length && l[i]!=-1){
+                node.right=new TreeNode(l[i]);
+                queue.add(node.right);
+            } 
+            i++;
+        }
+        return root;
+    }
+    public static List<Integer> rightRoot(TreeNode root, List<Integer> res){
+        Queue<TreeNode> queue=new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int cur=-1;
+            int size=queue.size();
+            for(int i=0;i<size;i++){
+                TreeNode node=queue.poll();
+                if(cur==-1)
+                cur=node.val;
+                if(node.left!=null) queue.add(node.left);
+                if(node.right!=null) queue.add(node.right);
+            }
+            res.add(cur);
+        }
+        return res;
+    }
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        String s[]=sc.nextLine().split("\\s+");
+        int a[]=new int[s.length];
+        for(int i=0;i<s.length;i++){
+            a[i]=Integer.parseInt(s[i]);
+        }
+        TreeNode root=createTree(a);
+        List<Integer> res=new ArrayList<>();
+        System.out.println(rightRoot(root,res));
+    }
+} 
+/*import java.util.*;
 class TreeNode{
     int val;
     TreeNode left,right;
@@ -99,3 +160,4 @@ class Solution{
         System.out.println(leftRoot(root,root.left,root.right,res));
     }
 }
+*/
