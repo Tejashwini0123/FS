@@ -72,101 +72,86 @@ Sample Output-3:
 
  */
 import java.util.*;
- class Solution{
-     public static TreeNode createTree(int l[]){
-         if(l.length==0) return null;
-         Queue<TreeNode> queue=new LinkedList<>();
-         TreeNode root=new TreeNode(l[0]);
-         queue.add(root);
-         int i=1;
-         while(!queue.isEmpty()){
-             TreeNode node=queue.poll();
-             if(i<l.length && l[i]!=-1){
-                 node.left=new TreeNode(l[i]);
-                 queue.add(node.left);
-            } 
+class TreeNode {
+    int val;
+    TreeNode left, right;
+
+    public TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+class Solution {
+    public static TreeNode createTree(int l[]) {
+        if (l.length == 0) return null;
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(l[0]);
+        queue.add(root);
+        int i = 1;
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (i < l.length && l[i] != -1) {
+                node.left = new TreeNode(l[i]);
+                queue.add(node.left);
+            }
             i++;
-            if(i<l.length && l[i]!=-1){
-                 node.right=new TreeNode(l[i]);
-                 queue.add(node.right);
-            } 
+            if (i < l.length && l[i] != -1) {
+                node.right = new TreeNode(l[i]);
+                queue.add(node.right);
+            }
             i++;
-            }
-         return root;
+        }
+        return root;
     }
-     public static List<Integer> rightView(TreeNode root,List<Integer> res){
-        Queue<TreeNode> queue=new LinkedList<>();
-        queue.add(root);
-        int cur=-1;
-        while(!queue.isEmpty()){
-            int size=queue.size();
-            for(int i=0;i<size;i++){
-                TreeNode node=queue.poll();
-                cur=node.val;
-                if(node.left!=null) queue.add(node.left);
-                if(node.right!=null) queue.add(node.right);
-            }
-            if(!res.add(cur))
-            res.add(cur);
-            }
+
+    public static void leftBoundary(TreeNode root, List<Integer> res) {
+        TreeNode node = root.left;
+        while (node != null) {
+            if (node.left != null || node.right != null) res.add(node.val);
+            node = (node.left != null) ? node.left : node.right;
+        }
+    }
+
+    public static void leafNodes(TreeNode root, List<Integer> res) {
+        if (root == null) return;
+        if (root.left == null && root.right == null) {
+            res.add(root.val);
+            return;
+        }
+        leafNodes(root.left, res);
+        leafNodes(root.right, res);
+    }
+
+    public static void rightBoundary(TreeNode root, List<Integer> res) {
+        TreeNode node = root.right;
+        List<Integer> temp = new ArrayList<>();
+        while (node != null) {
+            if (node.left != null || node.right != null) temp.add(node.val);
+            node = (node.right != null) ? node.right : node.left;
+        }
+        Collections.reverse(temp);
+        res.addAll(temp);
+    }
+
+    public static List<Integer> shield(TreeNode root) {
+        if (root == null) return new ArrayList<>();
+        List<Integer> res = new ArrayList<>();
+        res.add(root.val);  // Root node
+        leftBoundary(root, res);
+        leafNodes(root, res);
+        rightBoundary(root, res);
         return res;
     }
-    public static List<Integer> leaf(TreeNode root, List<Integer> res){
-        Queue<TreeNode> queue=new LinkedList<>();
-        queue.add(root);
-        while(!queue.isEmpty()){
-            TreeNode node=queue.poll();
-            if(node.left==null && node.right==null && !res.contains(node.val)) res.add(node.val);
-            if(node.left!=null) queue.add(node.left);
-            if(node.right!=null) queue.add(node.right);
+
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        String s[] = sc.nextLine().split("\\s+");
+        int a[] = new int[s.length];
+        for (int i = 0; i < s.length; i++) {
+            a[i] = Integer.parseInt(s[i]);
         }
-        return res;
-        
-    }
-     public static List<Integer> leftView(TreeNode root,List<Integer> res){
-        Queue<TreeNode> queue=new LinkedList<>();
-        queue.add(root);
-        while(!queue.isEmpty()){
-            int cur=-1;
-            int size=queue.size();
-            for(int i=0;i<size;i++){
-                TreeNode node=queue.poll();
-                if(cur==-1)
-                cur=node.val;
-                if(node.left!=null) queue.add(node.left);
-                if(node.right!=null) queue.add(node.right);
-            }
-            if(!res.add(cur))
-            res.add(cur);
-            }
-        }
-        return res;
-    }
-     public static List<Integer> shield(TreeNode root, List<Integer> res){
-         leftView(root,res);
-         leaf(root,res);
-         rightView(root,res);
-         return res;
-    }
-     public static void main(String args[]){
-         Scanner sc=new Scanner(System.in);
-         String s[]=sc.nextLine().split("\\s+");
-         int a[]=new int[s.length];
-         for(int i=0;i<s.length;i++){
-             a[i]=Integer.parseInt(s[i]);
-        }
-         TreeNode root=createTree(a);
-         List<Integer> res=new ArrayList<>();
-         res.add(root.val);
-         System.out.println(shield(root,res));
-        }
-    }
-    class TreeNode{
-     int val;
-     TreeNode left,right;
-     public TreeNode(int val){
-         this.val=val;
-         this.left=null;
-         this.right=null;
+        TreeNode root = createTree(a);
+        System.out.println(shield(root));
     }
 }
