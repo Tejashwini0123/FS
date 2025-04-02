@@ -71,17 +71,7 @@ Sample Output-3:
 [1, 2, 7, 6, 5, 3]
 
  */
-*********************************************************INCOMPLETE************************************************************************************
 import java.util.*;
-class TreeNode{
-     int val;
-     TreeNode left,right;
-     public TreeNode(int val){
-         this.val=val;
-         this.left=null;
-         this.right=null;
-    }
-}
  class Solution{
      public static TreeNode createTree(int l[]){
          if(l.length==0) return null;
@@ -104,7 +94,7 @@ class TreeNode{
             }
          return root;
     }
-     public static List<Integer> leftView(TreeNode root,List<Integer> res){
+     public static List<Integer> rightView(TreeNode root,List<Integer> res){
         Queue<TreeNode> queue=new LinkedList<>();
         queue.add(root);
         int cur=-1;
@@ -116,6 +106,7 @@ class TreeNode{
                 if(node.left!=null) queue.add(node.left);
                 if(node.right!=null) queue.add(node.right);
             }
+            if(!res.add(cur))
             res.add(cur);
             }
         return res;
@@ -123,21 +114,31 @@ class TreeNode{
     public static List<Integer> leaf(TreeNode root, List<Integer> res){
         Queue<TreeNode> queue=new LinkedList<>();
         queue.add(root);
+        while(!queue.isEmpty()){
+            TreeNode node=queue.poll();
+            if(node.left==null && node.right==null && !res.contains(node.val)) res.add(node.val);
+            if(node.left!=null) queue.add(node.left);
+            if(node.right!=null) queue.add(node.right);
+        }
         return res;
         
     }
-     public static List<Integer> rightView(TreeNode root,List<Integer> res){
+     public static List<Integer> leftView(TreeNode root,List<Integer> res){
         Queue<TreeNode> queue=new LinkedList<>();
         queue.add(root);
-        int cur=-1;
         while(!queue.isEmpty()){
+            int cur=-1;
             int size=queue.size();
             for(int i=0;i<size;i++){
                 TreeNode node=queue.poll();
+                if(cur==-1)
                 cur=node.val;
+                if(node.left!=null) queue.add(node.left);
                 if(node.right!=null) queue.add(node.right);
             }
+            if(!res.add(cur))
             res.add(cur);
+            }
         }
         return res;
     }
@@ -160,3 +161,12 @@ class TreeNode{
          System.out.println(shield(root,res));
         }
     }
+    class TreeNode{
+     int val;
+     TreeNode left,right;
+     public TreeNode(int val){
+         this.val=val;
+         this.left=null;
+         this.right=null;
+    }
+}
