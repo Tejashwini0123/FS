@@ -137,7 +137,7 @@ class Solution {
     public static List<Integer> shield(TreeNode root) {
         if (root == null) return new ArrayList<>();
         List<Integer> res = new ArrayList<>();
-        res.add(root.val);  // Root node
+        res.add(root.val); 
         leftBoundary(root, res);
         leafNodes(root, res);
         rightBoundary(root, res);
