@@ -55,30 +55,27 @@ import java.util.*;
 public class Solution {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String s1=sc.next();
-        String s2=sc.next();
-        int a=0,b=0;
-        List<Character> l=new ArrayList<>();
-        List<Character> l2=new ArrayList<>();
-        for(int i=0;i<s1.length();i++){
-            l.add(s1.charAt(i));
-        }
-        for(int i=0;i<s2.length();i++){
-            l2.add(s2.charAt(i));
-        }
-        for(int i=0;i<s2.length();i++){
-            if(s1.charAt(i)==s2.charAt(i)){
-                l.remove(i);
-                l2.remove(i);
-                a++;
+        String s1 = sc.next();
+        String s2 = sc.next();
+        int bulls = 0, cows = 0;
+        List<Character> l = new ArrayList<>();
+        List<Character> l2 = new ArrayList<>();
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) == s2.charAt(i)) {
+                bulls++;
+            } 
+            else {
+                l.add(s1.charAt(i));   
+                l2.add(s2.charAt(i));  
             }
         }
-        for(char ch:l2){
-            if(l.contains(ch)){
-                b++;
-                l.remove((Character)ch);
+        for (char ch : l2) {
+            if (l.contains(ch)) {
+                cows++;
+                l.remove((Character) ch); 
             }
         }
-        System.out.println(a+"A"+b+"B");
-    }
+        System.out.println(bulls + "A" + cows + "B");
+}
+
 }
