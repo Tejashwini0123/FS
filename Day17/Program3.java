@@ -68,26 +68,30 @@ Finally in room 0, keep item of height 3.
 We can keep 3 items maximum.
 */
 import java.util.*;
-class Solution{
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        String secret = sc.next();
-        String guess = sc.next();
-        int apples = 0, bananas = 0;
-        int[] secretFreq = new int[10];
-        int[] guessFreq = new int[10];
-        for (int i = 0; i < secret.length(); i++){
-            if (secret.charAt(i) == guess.charAt(i)){
-                apples++;
-            } 
-            else{
-                secretFreq[secret.charAt(i) - '0']++;
-                guessFreq[guess.charAt(i) - '0']++;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        List<Integer>items=new ArrayList<>();
+        List<Integer>rooms=new ArrayList<>();
+        for(int i=0;i<n;i++)items.add(sc.nextInt());
+        for(int i=0;i<k;i++)rooms.add(sc.nextInt());
+        Collections.sort(items,Collections.reverseOrder());
+        int l=0;
+        int r=0;
+        int count=0;
+        while(l<n && r<k){
+            if(items.get(l)<=rooms.get(r)){
+                count++;
+                l++;
+                r++;
             }
+            else{
+                l++;
+                }
         }
-        for (int i = 0; i < 10; i++){
-            bananas += Math.min(secretFreq[i], guessFreq[i]);
-        }
-        System.out.println(apples + "A" + bananas + "B");
+        System.out.println(count);
     }
+
 }
