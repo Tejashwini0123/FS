@@ -40,34 +40,30 @@ Sample Output-2:
 */
 import java.util.*;
 public class Solution {
-    public static boolean isSub(String s,List<Character>l){
-        int c=0;
-        Set<Character> set=new HashSet<>();
-        for(int i=0;i<s.length();i++){
-            set.add(s.charAt(i));
+    public static boolean isPermutation(String s, List<Character> l) {
+        Map<Character, Integer> map1 = new HashMap<>();
+        Map<Character, Integer> map2 = new HashMap<>();
+        for (char ch : s.toCharArray()) {
+            map1.put(ch, map1.getOrDefault(ch, 0) + 1);
         }
-        for(char k:set){
-            if(!l.contains(k)){
-                return false;
-            }
-            c++;
+        for (char ch : l) {
+            map2.put(ch, map2.getOrDefault(ch, 0) + 1);
         }
-        if(c==s.length())
-        return true;
-        return false;
+        return map1.equals(map2);
     }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String s1 = sc.next();
-        String s2 =sc.next();
-        List<Character> l=new ArrayList<>();
-        for(int i=0;i<s2.length();i++){
+        String s1 = sc.next();  
+        String s2 = sc.next();  
+        List<Character> l = new ArrayList<>();
+        for (int i = 0; i < s2.length(); i++) {
             l.add(s2.charAt(i));
         }
-        List<Integer> res=new ArrayList<>();
-        for(int i=0;i<=s1.length()-s2.length();i++){
-            String sub=s1.substring(i,i+s2.length());
-            if(isSub(sub,l)){
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i <= s1.length() - s2.length(); i++) {
+            String sub = s1.substring(i, i + s2.length());
+            if (isPermutation(sub, l)) {
                 res.add(i);
             }
         }
