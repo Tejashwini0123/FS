@@ -7,8 +7,7 @@ which should be `'Yes'` if `interests` exists and `'No'` if it does not.
 SELECT
   name,
   CASE 
-    WHEN TRY_PARSE_JSON(profile):interests IS NOT NULL 
-         AND ARRAY_SIZE(TRY_PARSE_JSON(profile):interests) > 0 THEN 'Yes'
+    WHEN profile:interests IS NOT NULL THEN 'Yes'
     ELSE 'No'
   END AS has_interests
 FROM customer_profiles;
